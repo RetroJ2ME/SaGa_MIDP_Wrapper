@@ -35,8 +35,8 @@
     <property name="cldc.jar" value="${deps.lib}/cldcapi11-2.0.4.jar"/>
     <property name="midp.jar" value="${deps.lib}/midpapi20-2.0.4.jar"/>
     <property name="proguard.jar" value="${deps.lib}/proguard-base-6.0.3.jar"/>
-    <property name="mld.jar" value="${deps.lib}/mld-player-1.3.jar"/>
-    <property name="mld-player.sha256" value="83e127f5430c54b74ba06dd18bdbff87532da7c3f6c448761345cc7d83f97ba4"/>
+    <property name="mld.jar" value="${deps.lib}/mld-player.jar"/>
+    <property name="mld.url" value="https://github.com/Magstic/MLD_Player/releases/latest/download/mld-player.jar"/>
     <property name="font.cache.dir" value="${deps.dir}/font"/>
     <property name="font.cache.file" value="${font.cache.dir}/fusion-pixel-12px-monospaced-ja.ttf"/>
 
@@ -101,7 +101,6 @@
             <available file="${cldc.jar}"/>
             <available file="${midp.jar}"/>
             <available file="${proguard.jar}"/>
-            <available file="${mld.jar}"/>
         </and></condition>
         <condition property="ivy.present"><isset property="deps.present"/></condition>
     </target>
@@ -119,10 +118,11 @@
         <ivy:resolve file="ivy.xml" conf="j2me,build"/>
         <ivy:retrieve pattern="${deps.lib}/[artifact]-[revision].[ext]" conf="j2me,build"/>
     </target>
-    <target name="dependencies" depends="check-deps,resolve-deps">
-        <checksum file="${mld.jar}" algorithm="SHA-256" property="${mld-player.sha256}" verifyproperty="mld.ok"/>
-        <fail message="MLD_Player 1.3 checksum mismatch"><condition><not><istrue value="${mld.ok}"/></not></condition></fail>
+    <target name="fetch-mld">
+        <mkdir dir="${deps.lib}"/>
+        <get src="${mld.url}" dest="${mld.jar}" usetimestamp="true"/>
     </target>
+    <target name="dependencies" depends="check-deps,resolve-deps,fetch-mld"/>
 
     <target name="check-core">
         <condition property="core.present"><and>
