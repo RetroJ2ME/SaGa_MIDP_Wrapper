@@ -1,8 +1,9 @@
 import java.io.File;
 import java.io.IOException;
+import doja.tools.classfile.ClassFile;
 import doja.tools.classfile.MethodRefPatch;
 
-/** Makai Toushi SaGa left-soft-key sound-control redirects. */
+/** Makai Toushi SaGa sound-control patches. */
 public final class GamePatch {
     private GamePatch() {}
 
@@ -17,6 +18,13 @@ public final class GamePatch {
             throw new IOException("SaGa sound-control references changed: j.e=" + next
                     + ", j.f=" + refresh);
         }
-        System.out.println("GamePatch: SaGa sound-control references redirected");
+        File soundClass = new File(classes, "j.class");
+        ClassFile cls = ClassFile.read(soundClass);
+        ClassFile.Member mediaAction = cls.findMethod("mediaAction",
+                "(Lcom/nttdocomo/ui/MediaPresenter;II)V");
+        if (mediaAction == null) throw new IOException("SaGa mediaAction method not found in j.class");
+        mediaAction.setAccessFlags(mediaAction.accessFlags() & ~0x0020); // ACC_SYNCHRONIZED
+        cls.write(soundClass);
+        System.out.println("GamePatch: SaGa sound-control references redirected and mediaAction unlocked");
     }
 }
