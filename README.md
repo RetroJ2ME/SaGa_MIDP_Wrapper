@@ -12,6 +12,8 @@ You only need [Apache Ant](https://ant.apache.org/bindownload.cgi)!
 2. Run `ant`;
 3. The MIDP version of Sa·Ga will be output to `dist/` :)
 
+*This requires JDK8 or newer.(but, OpenJDK8 is the best!)*
+
 
 ## What devices can play?
 
