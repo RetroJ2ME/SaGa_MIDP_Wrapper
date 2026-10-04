@@ -2,6 +2,11 @@
 
 A MIDP wrapper for the DoJa platform game **魔界塔士サ・ガ**.
 
+> [!NOTE]
+> This project **NEVER distributes precompiled JAR files**.
+>
+> Any third-party distribution of JAR files is **unauthorized** and **unaffiliated with this project**.
+
 ![left: MIDP, right: DoJa](img.webp)
 
 ## How to Use?
@@ -29,11 +34,13 @@ Just run the **ant** build once, and Translation.tsv will be generated under `co
 You can safely ignore Index.tsv, its only used internally to index the translations.
 
 
-## The Code Is Messy!
+## Staff
 
-Yes, I used ChatGPT.
+**Framework**: Magstic
 
-I sincerely apologize for the code cleanliness.
+**Coding**: 5.4，5.6 Sol Web
+
+**Artist**: Magstic
 
 
 ## Test!
